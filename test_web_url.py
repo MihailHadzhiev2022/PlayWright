@@ -1,7 +1,7 @@
-from playwright.sync_api import Page
+from playwright.async_api import Page, expect
+import pytest
 
-def test_web_url(page:Page):
-    page.goto("https://www.investor.bg/")
-
+@pytest.mark.asyncio
+async def test_web_url(page: Page):
     hreche = page.locator('.responsive-scroll', has_text="Темите днес:")
-    assert hreche.is_visible()
+    await expect(hreche).to_be_visible()

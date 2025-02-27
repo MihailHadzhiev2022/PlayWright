@@ -1,14 +1,19 @@
-from playwright.sync_api import Page
+from playwright.async_api import Page, expect
+import pytest
 
-def test_main_navigation(page: Page):
-    page.goto("https://www.investor.bg/")
+
+@pytest.mark.asyncio
+async def test_main_navigation(page: Page):
     # Click the first menu item
     ok_button = page.locator("button", has_text="Ок, продължи")
-    ok_button.wait_for()
-    ok_button.click()
+    await ok_button.wait_for()
+    await ok_button.click()
 
     menu_item = page.locator("#menu-toggle")
-    menu_item.click()
-    first_idem = page.locator('a', has_text="Начало")
-    first_idem.click()
-    assert page.url == "https://www.investor.bg/"
+    await menu_item.click()
+
+    first_item = page.locator('a', has_text="Начало")
+    await first_item.click()
+
+    # Use expect for assertion (async version of assert)
+    await expect(page).to_have_url("https://www.investor.bg/")

@@ -1,7 +1,7 @@
-from playwright.sync_api import Page
+from playwright.async_api import Page, expect
+import pytest
 
-def test_search_bar_visible(page: Page):
-    page.goto("https://www.investor.bg/")
-
+@pytest.mark.asyncio
+async def test_search_bar_visible(page: Page):
     search_bar = page.locator('#search-icon')
-    assert search_bar.is_visible()
+    await expect(search_bar).to_be_visible()
