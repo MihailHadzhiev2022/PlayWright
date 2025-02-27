@@ -11,7 +11,10 @@ async def test_main_navigation(page: Page):
 
     menu_item = page.locator("#menu-toggle")
     await menu_item.click()
+    #tststts
 
+    first_item = page.locator('a', has_text="Начало")
+    await first_item.click()
     first_item = page.locator('a', has_text="Начало")
     await first_item.click()
 
