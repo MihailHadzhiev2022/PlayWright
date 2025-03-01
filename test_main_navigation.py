@@ -14,7 +14,6 @@ async def test_main_navigation():
 
         # Click the 'Ок, продължи' button
         ok_button = page.locator("button", has_text="Ок, продължи")
-        await ok_button.wait_for()
         await ok_button.click()
 
         # Click the menu toggle

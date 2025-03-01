@@ -18,3 +18,4 @@ async def test_web_url():
 
         # Clean up and close the browser after the test
         await browser.close()
+
