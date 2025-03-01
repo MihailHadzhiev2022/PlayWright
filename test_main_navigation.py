@@ -5,7 +5,7 @@ from playwright.async_api import async_playwright, expect
 async def test_main_navigation():
     # Start Playwright and create the necessary context and page.
     async with async_playwright() as p:
-        browser = await p.chromium.launch()
+        browser = await p.chromium.launch(headless=False)
         context = await browser.new_context()
         page = await context.new_page()
 
