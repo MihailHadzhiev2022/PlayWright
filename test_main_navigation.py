@@ -1,22 +1,25 @@
-from playwright.async_api import Page, expect
 import pytest
-
+from playwright.async_api import async_playwright, expect
 
 @pytest.mark.asyncio
-async def test_main_navigation(page: Page):
-    # Click the first menu item
-    ok_button = page.locator("button", has_text="Ок, продължи")
-    await ok_button.wait_for()
-    await ok_button.click()
+async def test_main_navigation():
+    # Start Playwright and create the necessary context and page.
+    async with async_playwright() as p:
+        browser = await p.chromium.launch()
+        context = await browser.new_context()
+        page = await context.new_page()
 
-    menu_item = page.locator("#menu-toggle")
-    await menu_item.click()
-    #tststts
+        # Navigate to the website.
+        await page.goto("https://www.investor.bg/")
 
-    first_item = page.locator('a', has_text="Начало")
-    await first_item.click()
-    first_item = page.locator('a', has_text="Начало")
-    await first_item.click()
+        # Click the 'Ок, продължи' button
+        ok_button = page.locator("button", has_text="Ок, продължи")
+        await ok_button.wait_for()
+        await ok_button.click()
 
-    # Use expect for assertion (async version of assert)
-    await expect(page).to_have_url("https://www.investor.bg/")
+        # Click the menu toggle
+        menu_item = page.locator("#menu-toggle")
+        await menu_item.click()
+
+
+        await browser.close()
